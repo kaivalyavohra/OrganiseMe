@@ -1,0 +1,58 @@
+{% extends "header.html"%}
+{% block main %}
+    <div class="ui secondary pointing menu">
+    
+  <a class="item">
+    Organise Me
+  </a>
+
+  <div class="right menu">
+
+    <a class="ui item" href="/logout">
+      Logout
+    </a>
+  </div>
+</div>
+	<div class="ui container" align="center">
+
+				<form method="POST" action="/matchpairs">
+					<table style="margin: 0 auto;">
+					<tr class="top aligned">
+					<td class="top aligned">
+					<table class="ui padded table">
+
+						<tr><td>Student</td></tr>
+
+						{% for student in sturows %}
+						<tr>
+							<td><input class="ui checkbox" type="checkbox" name="stu:{{student.email}}"> {{student.firstName}} {{student.lastName}}</td> 
+						</tr>
+						{% endfor %}
+					</table>
+					</td>
+					<td></td>
+
+					<td class="top aligned">
+					<table class="ui padded table">
+
+						<tr><td>Coach</td></tr>
+
+						{% for coach in coachrows %}
+						<tr>
+							<td><input class="ui checkbox" type="checkbox" name="coach:{{coach.email}}"> {{coach.firstName}} {{coach.lastName}}</td>
+						</tr>
+
+						{% endfor %}
+					</table>
+					</td>
+					</tr>
+					</table>
+					<input class="ui submit button" style="margin: 0 auto;" align="center" type="submit">
+
+	
+
+
+				</form>
+			</div>
+
+{% endblock %}

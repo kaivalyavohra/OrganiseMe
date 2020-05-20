@@ -1,0 +1,177 @@
+{% extends "header.html"%}
+
+    
+
+{% block main %}
+    <div class="ui secondary pointing menu">
+    
+  <a class="item">
+    Organise Me
+  </a>
+  <a class="item">
+    Unique Code: {{unique.uniqueCode}}
+  </a>
+
+  <div class="right menu">
+
+    <a class="ui item" href="/logout">
+      Logout
+    </a>
+  </div>
+</div>
+<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+
+    <style>
+        body {
+          padding: 1em;
+        }
+
+        .ui.action.input input[type="file"] {
+          display: none;
+        }
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+
+        }
+
+ 
+        #myChart {
+            height: 50%;
+            width: 50%;
+            min-height: 150px;
+            margin: 0 auto;
+        }
+ 
+        .zc-ref {
+            display: none;
+        }
+ 
+        zing-grid[loading] {
+            height: 800px;
+        }
+    </style>
+    
+    <div id='myChart' margin="auto"></div>
+    <script>
+        ZC.LICENSE = ["b55b025e438fa8a98e32482b5f768ff5"];
+        var myConfig = {
+            type: 'radar',
+            plot: {
+                aspect: 'area',
+                animation: {
+                    effect: 3,
+                    sequence: 1,
+                    speed: 700
+                }
+            },
+            scaleV: {
+                visible: false
+            },
+            scaleK: {
+                values: '0:5:1',
+                labels: ['Time Management', 'Filing', 'Organization Time', 'Packing your Bag', 'Homework diary', 'Locker Use'],
+                item: {
+                    fontColor: '#607D8B',
+                    backgroundColor: "white",
+                    borderColor: "#aeaeae",
+                    borderWidth: 1,
+                    padding: '5 10',
+                    borderRadius: 10
+                },
+                refLine: {
+                    lineColor: '#005DFF'
+                },
+                tick: {
+                    lineColor: '#ff0000',
+                    lineWidth: 2,
+                    lineStyle: 'dotted',
+                    size: 20
+                },
+                guide: {
+                    lineColor: "#607D8B",
+                    lineStyle: 'solid',
+                    alpha: 0.3,
+                    backgroundColor: "#c5c5c5 #718eb4"
+                }
+            },
+            series: [{
+                    values: [{{initWheel.timeManagement}},{{initWheel.filing}},{{initWheel.organizationTime}},{{initWheel.packingBag}},{{initWheel.hwDiary}},{{initWheel.lockerUse}}],
+                    text: 'before'
+                },{
+                    values: [{{finalWheel.timeManagement}},{{finalWheel.filing}},{{finalWheel.organizationTime}},{{finalWheel.packingBag}},{{finalWheel.hwDiary}},{{finalWheel.lockerUse}}],
+                    text: 'after'
+                },
+                ]
+        };
+ 
+        zingchart.render({
+            id: 'myChart',
+            data: myConfig,
+            height: '100%',
+            width: '100%'
+        });
+
+
+    </script>
+    <div class="ui container">
+    <table style="width:100%" class="ui celled table">
+        <tr>
+        <th align="left">Task</th>
+        <th align="left">Write Up</th> 
+        <th align="left">Evidence</th>
+        <th align="left">Upload/Replace Image</th>
+      </tr>
+
+    {% for task in tasks %}
+    <TR>
+        <TD class="c1">{{task.taskName}}</TD>
+        <form method="POST" action="{{ url_for('imageupload') }}" enctype="multipart/form-data">
+        <TD class="c2">
+        <textarea name="task{{task.taskID}}" rows="10" cols="30" style="border:solid 1px black;">{{task.text}}</textarea>
+        </TD>
+        <TD class="c3">
+            <img src="data:;base64,{{ task.image }}" style="width:400px;height:500px;"/>
+        </TD>
+       <TD class="c3">
+        <table>
+        <tr>
+        <th>
+
+            <input type="file" name="pic" accept="image/*"> -->
+
+        </div></th>
+            
+        <th><input class="right floated ui submit button"type="submit"></th>
+        </tr>
+        </table>
+
+
+        </form></TD>
+    </TR>
+    {% endfor %}
+    </table>
+
+    <form action="/fillwheel" method="GET">
+    <input type="submit" value="Fill Final Wagon Wheel" class = "ui button"/>
+    </form>
+
+    <h2 align="center">
+        Reflect on the organization project.
+        What targets have you agreed with your coach to achieve?
+        How did you know when you had achieved this?
+        What areas still require improvement?
+    </h2>
+    <div align="center">
+        <form method="POST" action="/studenteval">
+            <textarea name="studenteval" rows="15" cols="70" placeholder="Enter evaluation here" style="border:solid 0.5px black;">{{eval.text}}</textarea>
+            
+            <input type="submit" class="ui submit button">
+        </form>
+    </div>
+
+
+    </div>
+    
+{% endblock %}

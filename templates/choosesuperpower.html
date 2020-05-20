@@ -1,0 +1,35 @@
+{% extends "header.html"%}
+{% block main %}
+    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+        <div class="wrapper wrapper--w680">
+            <div class="card card-4">
+                <div class="card-body">
+                    <h2 class="title">Choose Superpower</h2>
+                    <h4>{{errorMessage}}</h4>
+                    <form  method="POST" action="/choosesuperpower">
+                        <div class="input-group">
+                            <label class="label">Superpower</label>
+                            <div class="rs-select2 js-select-simple select--no-search">
+                                <select name="superpower" required>
+                                    <option disabled="disabled" selected="selected">Choose option</option>
+                                    <option>Locker Use</option>
+                                    <option>Organization Time</option>
+                                    <option>Time Management</option>
+                                    <option>Filing</option>
+                                    <option>Packing your Bag</option>
+                                    <option>Homework Diary</option>
+                                </select>
+                                <div class="select-dropdown"></div>
+                            </div>
+                        </div>
+                        <div class="p-t-15">
+                            <button class="btn btn--radius-2 btn--blue" type="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

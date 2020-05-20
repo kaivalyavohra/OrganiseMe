@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+    <meta charset="utf-8">
+    <title>Viewing Profile</title>
+    <link href="{{ url_for('static', filename='css/semantic.css') }}" rel="stylesheet" media="all">
+
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+    <style>
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+
+        }
+
+ 
+        #myChart {
+            height: 50%;
+            width: 50%;
+            min-height: 150px;
+            margin: 0 auto;
+     
+
+        }
+ 
+        .zc-ref {  
+            display: none;
+        }
+ 
+        zing-grid[loading] {
+            height: 800px;
+        }
+    </style>
+</head>
+ 
+<body padding="10px">
+    <div class="ui secondary pointing menu">
+    
+  <a class="item">
+    Organise Me
+  </a>
+
+  <div class="right menu">
+
+    <a class="ui item" href="/logout">
+      Back
+    </a>
+  </div>
+</div>
+
+
+    <div id='myChart'><a class="zc-ref" href="https://www.zingchart.com/">Powered by ZingChart</a></div>
+
+    <script>
+        ZC.LICENSE = ["b55b025e438fa8a98e32482b5f768ff5"];
+        var myConfig = {
+            type: 'radar',
+            plot: {
+                aspect: 'area',
+                animation: {
+                    effect: 3,
+                    sequence: 1,
+                    speed: 700
+                }
+            },
+            scaleV: {
+                visible: false
+            },
+            scaleK: {
+                values: '0:5:1',
+                labels: ['Time Management', 'Filing', 'Organization Time', 'Packing your Bag', 'Homework diary', 'Locker Use'],
+                item: {
+                    fontColor: '#607D8B',
+                    backgroundColor: "white",
+                    borderColor: "#aeaeae",
+                    borderWidth: 1,
+                    padding: '5 10',
+                    borderRadius: 10
+                },
+                refLine: {
+                    lineColor: '#005DFF'
+                },
+                tick: {
+                    lineColor: '#ff0000',
+                    lineWidth: 2,
+                    lineStyle: 'dotted',
+                    size: 20
+                },
+                guide: {
+                    lineColor: "#607D8B",
+                    lineStyle: 'solid',
+                    alpha: 0.3,
+                    backgroundColor: "#c5c5c5 #718eb4"
+                }
+            },
+            series: [{
+                    values: [{{initWheel.timeManagement}},{{initWheel.filing}},{{initWheel.organizationTime}},{{initWheel.packingBag}},{{initWheel.hwDiary}},{{initWheel.lockerUse}}],
+                    text: 'before'
+                },{
+                    values: [{{finalWheel.timeManagement}},{{finalWheel.filing}},{{finalWheel.organizationTime}},{{finalWheel.packingBag}},{{finalWheel.hwDiary}},{{finalWheel.lockerUse}}],
+                    text: 'after'
+                },
+                ]
+        };
+ 
+        zingchart.render({
+            id: 'myChart',
+            data: myConfig,
+            height: '100%',
+            width: '100%'
+        });
+    </script>
+
+
+    <table style="width:100%;table-layout: fixed;" class="ui celled table">
+        <tr>
+        <th align="left">Task</th>
+        <th align="left">Write Up</th> 
+        <th align="left">Evidence</th>
+      </tr>
+
+    {% for task in tasks %}
+    <TR>
+        <TD class="c1">{{task.taskName}}</TD>
+        <TD class="c2">
+        <p>
+                {{task.text}}
+            </p></TD>
+        <TD class="c3">
+            <img src="data:;base64,{{ task.image }}" style="width:500px;height:600px;"/>
+        </TD>
+    </TR>
+    {% endfor %}
+    </table>
+
+<h3>Student Evaluation: <br>{{studenteval}}</h3>
+
+<br><br>
+
+<h3>Coach Evaluation:<br>{{coacheval}}</h3>
+
+</body>
+ 
+</html>

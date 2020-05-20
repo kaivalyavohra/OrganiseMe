@@ -1,0 +1,39 @@
+{% extends "header.html"%}
+{% block main %}
+    <div class="ui secondary pointing menu">
+    
+  <a class="item">
+    Organise Me
+  </a>
+
+  <div class="right menu">
+
+    <a class="ui item" href="/logout">
+      Logout
+    </a>
+  </div>
+</div>
+	<div class="ui container" align="center">
+
+
+	<form action="/show/{{uniqueCode}}" method="GET">
+    <input type="submit" value="View Student's Profile" class = "ui button"/>
+	</form>
+	<br>
+	<form action="/coachEvaluation" method="POST">
+		 <h4 align="center">Reflect on the organization project.
+        What targets have you agreed for your student to achieve?
+        How did you know when they had achieved this?
+        What areas still require improvement?</h4>
+
+
+            <textarea name="coacheval" rows="40" cols="160" placeholder="Enter evaluation here.">{{coachEval}}</textarea>
+
+    <input type="submit" value="Write Evaluation" class = "ui button"/>
+	</form>
+
+
+	</div>
+	
+	
+{% endblock %}
